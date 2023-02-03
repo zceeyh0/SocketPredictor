@@ -22,7 +22,7 @@ class MLP:
         self.n_steps = n_steps
         self.future_months = []  # recorded months of predictions in the future
         self.predictions = []  # predicted numbers of sunspots
-        
+
     # split a training dataset into groups with size of 'n_steps'
     def create_training_set(self, dataset):
         x, y = list(), list()
@@ -38,8 +38,8 @@ class MLP:
             x.append(x_train)
             y.append(y_train)
         return np.array(x), np.array(y)
-      
-      def mlp_predict(self, x_train, y_train, n_months):
+
+    def mlp_predict(self, x_train, y_train, n_months):
         start_t = time.time()
         for i in range(n_months):
             # build an MLP model with input dimension 'n_steps'
@@ -71,8 +71,8 @@ class MLP:
         print('Time consumed for MLP training and predicting:',
               round(time.time() - start_t, 2), 's')
         return self.predictions[-1]
-      
-      def plot_predictions(self):
+
+    def plot_predictions(self):
         # plot the existing dataset and predictions for the future
         plt.plot(self.df['Month'], self.df['Sunspots'], label='Existing data')
         plt.plot(self.future_months, self.predictions, label='Predicted data')
@@ -95,7 +95,7 @@ class MLP:
         ss_res = sum((y_test - y_pred) ** 2)
         r2 = 1 - (ss_res / ss_tot)
         print('R2 score:', r2)
-        
+
         # plot three graphs showing the prediction results, true results,
         # and a combination of both
         plt.plot(self.df['Month'], self.df['Sunspots'], label='Existing data')
@@ -119,7 +119,7 @@ class MLP:
         plt.ylabel('Number of Sunspots')
         plt.legend(loc='best')
         plt.show()
-        
+
 def get_xtrain(filePath):
     # read the training dataset
     data = pd.read_csv(filePath)
@@ -136,10 +136,10 @@ def get_xtrain(filePath):
     mlp = MLP(df, n_steps)
     sunspots = df['Sunspots'].to_list()
     X_train, Y_train = mlp.create_training_set(sunspots)
-    return X_train
+	return X_train
     # Y_test = np.array(df_test['Sunspots'].to_list())
     # mlp.results_eval(X_train, Y_train, df_test, Y_test)
-    
+
 # this function can be used to evaluate accuracy and performance of the model
 def get_ytrain(filePath):
     # read the training dataset
@@ -157,6 +157,6 @@ def get_ytrain(filePath):
     mlp = MLP(df, n_steps)
     sunspots = df['Sunspots'].to_list()
     X_train, Y_train = mlp.create_training_set(sunspots)
-    return Y_train
+	return Y_train
     # Y_test = np.array(df_test['Sunspots'].to_list())
     # mlp.results_eval(X_train, Y_train, df_test, Y_test)
